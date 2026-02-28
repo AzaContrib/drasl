@@ -8,6 +8,8 @@ WORKDIR /app
 COPY . .
 
 # Build and install the application
+# Update go-sqlite3 to fix musl compatibility issue on newer Alpine
+RUN go get github.com/mattn/go-sqlite3@v1.14.24 && go mod tidy
 RUN make prebuild && make build
 RUN make install prefix=/out/usr
 
